@@ -1,0 +1,22 @@
+// TSCONFIG FOR CHECKMATE SERVER
+{
+    "compilerOptions": {
+		"module": "commonjs",
+		"target": "esnext",
+		"moduleResolution": "node",
+		"sourceMap": true,
+		"outDir": "dist",
+		"allowJs": true,
+		"lib": ["dom", "es6"]
+	  },
+    "include": [
+        "server.ts",
+        "routes/**/*.ts"
+    ],
+    "exclude": [
+		"dist",
+        "node_modules",
+		"client"					// client is responsible for maintaining it's TS compilation
+    ],
+	"extends": "@tsconfig/node12/tsconfig.json"
+}

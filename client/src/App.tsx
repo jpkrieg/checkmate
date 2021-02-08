@@ -1,32 +1,36 @@
-import React from 'react';
-import {BrowserRouter as Router, Route} from 'react-router-dom'
+import React, { useState, useEffect } from "react";
+import socketIOClient from "socket.io-client";
+import {BrowserRouter as Router, Route} from "react-router-dom"
 import './App.css';
 
-import About from './components/About'
-import Layout from './components/Layout'
-import { Customer } from './components/Customers'
+import About from './components/About/About'
+import Layout from './components/Layout/Layout'
 
+const ENDPOINT = "http://192.168.1.17:5000"
 
 const App: React.FC = () => {
-	const [customers, setCustomers] = React.useState<Customer[]>([]);
+	const [response, setResponse] = React.useState("");
 
 	React.useEffect(() => {
-		const fetchData = async () => {
-			const response: Response = await fetch('/api/customers');
-			const data: Customer[]  = await response.json();
-			setCustomers(data);
-		}
-
-		fetchData();
+		const socket = socketIOClient(ENDPOINT);
+		socket.on("FromAPI", data =>
+			{
+				setResponse(data);
+			}
+		);
+		console.log("working")
 	}, []);
 
 	return (
 		<Router>
+			<p>
+				It's <time dateTime={response}>{response}</time>
+			</p>
 			<Route 
 				path='/'
 				exact
 				render={() => (
-					<Layout customers={customers} />
+					<Layout />
 				)}
 			/>
 			<Route 
