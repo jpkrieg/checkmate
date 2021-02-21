@@ -11,8 +11,10 @@ const App: React.FC = () => {
 	return (
 		<Router>
 
+			
+
 			<Route
-				path='/'
+				path='/split'
 				exact
 				render={() => (
 					<div className="iframe-div">
