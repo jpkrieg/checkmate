@@ -1,6 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
+node_modules
 /server/node_modules
 /client/node_modules
 /server/.pnp
@@ -12,6 +13,10 @@
 # production
 /server/build
 
+# compiled files
+/server/dist
+/client/build
+
 # misc
 .DS_Store
 .env.local
@@ -19,6 +24,7 @@
 .env.test.local
 .env.production.local
 
+# npm + yarn
 /server/npm-debug.log*
 /client/npm-debug.log*
 /server/yarn-debug.log*
@@ -26,4 +32,3 @@
 /server/yarn-error.log*
 /client/yarn-error.log*
 
-/server/dist

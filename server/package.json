@@ -1,20 +1,13 @@
 {
-	"name": "checkmate",
-	"version": "1.0.0",
-	"description": "A chess website by John Paul Krieg",
-	"main": "./dist/server.js",
+	"license": "MIT",
 	"scripts": {
 		"build": "tsc",
-		"run-and-watch": "tsc -w & nodemon -w dist",
-		"client-install": "cd client && npm install",
-		"start": "nodemon ./dist/server.js",
-		"server": "nodemon ./dist/server.js",
-		"client": "npm start --prefix client",
-		"dev": "concurrently \"npm run server\" \"npm run client\"",
-		"prod": "yarn build && yarn start"
+		"start": "node ./dist/server.js",
+		"dev": "tsc -w & nodemon -w dist",
+		"test": "echo \"TODO: ADD TEST SCRIPT\"",
+		"deploy": "echo \"TODO: ADD DEPLOY SCRIPT\"",
+		"upgrade": "yarn upgrade"
 	},
-	"author": "John Paul Krieg",
-	"license": "MIT",
 	"dependencies": {
 		"@types/socket.io": "^2.1.13",
 		"concurrently": "^5.3.0",

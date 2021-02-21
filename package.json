@@ -1,0 +1,31 @@
+{
+	"name": "checkmate",
+	"description": "A chess website",
+	"version": "1.0.0",
+	"repository": "https://github.com/jpkrieg/checkmate.git",
+	"author": "john <jpkrieg@umich.edu>",
+	"license": "MIT",
+	"scripts": {
+		"install": "concurrently \"yarn run install-client\" \"yarn run install-server\"",
+		"install-client": "cd client && yarn install",
+		"install-server": "cd server && yarn install",
+		"build": "concurrently \"yarn run build-client\" \"yarn run build-server\"",
+		"build-client": "cd client && yarn run build",
+		"build-server": "cd server && yarn run build",
+		"start": "concurrently \"yarn run start-client\" \"yarn run start-server\"",
+		"start-client": "cd client && yarn run start",
+		"start-server": "cd server && yarn run start",
+		"dev": "concurrently \"yarn run dev-client\" \"yarn run dev-server\"",
+		"dev-client": "cd client && yarn run dev",
+		"dev-server": "cd server && yarn run dev",
+		"test": "concurrently \"yarn run dev-client\" \"yarn run dev-server\"",
+		"test-client": "cd client && yarn run test",
+		"test-server": "cd server && yarn run test",
+		"deploy": "concurrently \"yarn run deploy-client\" \"yarn run deploy-server\"",
+		"deploy-client": "cd client && yarn run deploy",
+		"deploy-server": "cd server && yarn run deploy"
+	},
+	"dependencies": {
+		"concurrently": "^6.0.0"
+	}
+}
