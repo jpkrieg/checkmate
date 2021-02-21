@@ -15,35 +15,52 @@ app.use(index);
 const httpServer = http.createServer(app);
 const io = new Server(httpServer,
 	{
-		cors: {
-			origin: "http://192.168.1.17",
+		cors: { // for now you need a CORS disabling extension to make this work
+			origin: "http://192.168.1.18",
 			methods: ["GET", "POST"]
 		}
 	}
 );
-	
+
+let state = "new state";
+let prevTime: number = Date.now();
+let thisTime: number = Date.now();
+let count: number = 0;
+
+// Handle New Connections
 io.on("connection", (socket: Socket) =>
 	{
-		// ...
-	}
-);
+		// console.log("New client connected");
 
-// handle socket.io connections
-let interval: NodeJS.Timeout;
-io.on("connection", (socket: Socket) =>
-	{
-		console.log("New client connected");
-
-		if (interval) {
-			clearInterval(interval);
-		}
-
-		interval = setInterval(() => getApiAndEmit(socket), 1000);
+		socket.join("client-pool")
 
 		socket.on("disconnect", () =>
 			{
-				console.log("Client disconnected");
-				clearInterval(interval);
+				// console.log("Client disconnected");
+			}
+		);
+
+		socket.on("client-update-1", (message: string) =>
+			{
+				prevTime = thisTime;
+				thisTime = Date.now();
+				console.log(++count);
+				console.log((thisTime - prevTime) / 1000, "-------" + thisTime + "---------" + prevTime)
+
+				state = "1";
+				io.to("client-pool").emit("server-update", state);
+			}
+		);
+
+		socket.on("client-update-2", (message: string) =>
+			{
+				prevTime = thisTime;
+				thisTime = Date.now();
+				console.log(++count);
+				console.log((thisTime - prevTime) / 1000, "-------" + thisTime + "---------" + prevTime)
+
+				state = "2";
+				io.to("client-pool").emit("server-update", state);
 			}
 		);
 	}
@@ -53,7 +70,7 @@ const getApiAndEmit = (socket: Socket) =>
 {
 	const response = new Date();
 	// Emitting a new message. Will be consumed by the client
-	socket.emit("FromAPI", response);
+	socket.emit("DataSentFromServer", response);
 };
 
 httpServer.listen(port, () => console.log(`Listening on port ${port}`));
