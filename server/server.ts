@@ -1,8 +1,11 @@
+// populate process.env
+import * as dotenv from "dotenv"
+dotenv.config()
+
 // express + middlewares
 import express from "express";
 import helmet from "helmet";
 import cors from "cors";
-import bodyParser from "body-parser";
 
 // mongodb + data schemas
 import mongoose from "mongoose";
@@ -23,7 +26,7 @@ const app: express.Application = express();
 // set up express middlewares
 app.use(cors());				// enable cross-origin requests
 app.use(helmet());				// secure app with various HTTP headers
-app.use(bodyParser.json());		// parses client requests from json to javascript objects
+app.use(express.json());		// parses client requests from json to javascript objects
 
 // set up routes
 app.use(Index);
@@ -31,19 +34,19 @@ app.use(Auth);
 app.use(Users);
 
 // set up mongoose with our local mongodb instance
-const URI = "mongodb://127.0.0.1:27017/checkmate-db";
+const URI = process.env.mongoURI || "mongodb://127.0.0.1:27017/checkmate-db";
 const options: object= {
 	useNewUrlParser: true,
-	useCreateIndex: true,
-	autoIndex: true
-}
-mongoose
+		useCreateIndex: true,
+		autoIndex: true
+	}
+	mongoose
 	.connect(URI, options)
 	.then(() => console.log("Mongo Connected"))
 	.catch(err => console.log(err));
 
 // start listening for http reqyests on port 5000
-const port = 5000;
+const port = 5000;	
 const httpServer = http.createServer(app);
 httpServer.listen(port, () => console.log(`Listening on port ${port}`));
 
